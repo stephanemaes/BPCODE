@@ -1,0 +1,46 @@
+infrastructure:
+  name: "Test"
+  version: "1.2.0"
+  
+  nodes:
+    - name: "web-server-01"
+      specs:
+        cpu: "1 cores"
+        ram: "2GB"
+        storage: "5GB"
+        os: "Ubuntu 22.04"
+      network:
+        ip_address: "10.0.0.5"
+        connections:
+          - target: "database-primary"
+            port: 5432
+            protocol: "TCP"
+          - target: "load-balancer"
+            port: 443
+            protocol: "HTTPS"
+
+    # - name: "database-primary"
+    #   specs:
+    #     cpu: "2 cores"
+    #     ram: "2GB"
+    #     storage: "5GB"
+    #     os: "Debian 11"
+    #   network:
+    #     ip_address: "10.0.0.10"
+    #     connections:
+    #       - target: "backup-node"
+    #         port: 22
+    #         protocol: "SSH"
+
+    # - name: "load-balancer"
+    #   specs:
+    #     cpu: "1 cores"
+    #     ram: "1GB"
+    #     storage: "5GB"
+    #     os: "Alpine Linux"
+    #   network:
+    #     ip_address: "10.0.0.1"
+    #     connections:
+    #       - target: "web-server-01"
+    #         port: 80
+    #         protocol: "HTTP"
