@@ -15,7 +15,7 @@ PROXMOX_NODE = 'pve'
 # Mapping: Welke OS naam in YAML hoort bij welk Template ID in Proxmox?
 OS_TEMPLATES = {
     "Ubuntu 22.04": 9000,
-    "Debian 11": 9001,
+    "Debian 12": 9001,
     "Alpine Linux": 9002
 }
 
@@ -44,7 +44,7 @@ def create_vms_from_yaml(file_path):
         # 1. Zoek de juiste template op
         template_id = OS_TEMPLATES.get(os_choice)
         if not template_id:
-            print(f"❌ Overslaan: Geen template ID gevonden voor {os_choice}")
+            print(f"Overslaan: Geen template ID gevonden voor {os_choice}")
             continue
 
         ram_mb = int(specs['ram'].replace('GB', '')) * 1024
@@ -67,7 +67,7 @@ def create_vms_from_yaml(file_path):
                 
                 if task_status.get("status") == "stopped":
                     if task_status.get("exitstatus") == "OK":
-                        print(f"✅ Kloon klaar voor {name}.")
+                        print(f"Kloon klaar voor {name}.")
                         break
                     else:
                         raise Exception(f"Kloon mislukt in Proxmox: {task_status.get('exitstatus')}")
@@ -89,10 +89,10 @@ def create_vms_from_yaml(file_path):
             # 4. Start de VM (optioneel)
             # proxmox.nodes(PROXMOX_NODE).qemu(new_vmid).status.start.post()
             
-            print(f"✅ {name} succesvol uitgerold.")
+            print(f"{name} succesvol uitgerold.")
 
         except Exception as e:
-            print(f"❌ Fout bij {name}: {e}")
+            print(f"Fout bij {name}: {e}")
 
 if __name__ == "__main__":
     create_vms_from_yaml('infrastructure.yml')

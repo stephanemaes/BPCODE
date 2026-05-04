@@ -19,18 +19,18 @@ infrastructure:
             port: 443
             protocol: "HTTPS"
 
-    # - name: "database-primary"
-    #   specs:
-    #     cpu: "2 cores"
-    #     ram: "2GB"
-    #     storage: "5GB"
-    #     os: "Debian 11"
-    #   network:
-    #     ip_address: "10.0.0.10"
-    #     connections:
-    #       - target: "backup-node"
-    #         port: 22
-    #         protocol: "SSH"
+    - name: "database-primary"
+      specs:
+        cpu: "2 cores"
+        ram: "2GB"
+        storage: "5GB"
+        os: "Debian 12"
+      network:
+        ip_address: "10.0.0.10"
+        connections:
+          - target: "backup-node"
+            port: 22
+            protocol: "SSH"
 
     # - name: "load-balancer"
     #   specs:
