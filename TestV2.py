@@ -39,6 +39,7 @@ def create_vms_from_yaml(file_path):
     for node in data.get('infrastructure', {}).get('nodes', []):
         name = node['name']
         specs = node['specs']
+        network = node['network']
         os_choice = specs.get('os')
         
         # 1. Zoek de juiste template op
@@ -50,7 +51,8 @@ def create_vms_from_yaml(file_path):
         ram_mb = int(specs['ram'].replace('GB', '')) * 1024
         cores = int(specs['cpu'].split()[0])
         new_vmid = int(proxmox.cluster.nextid.get())
-
+        ip=[network['ip_address']]
+        gw=[network['gateway']]
         print(f"Klonen van {os_choice} naar {name} (ID: {new_vmid})...")
 
         try:
@@ -75,14 +77,24 @@ def create_vms_from_yaml(file_path):
                 # Wacht 2 seconden voor de volgende check om de API niet te overbelasten
                 time.sleep(2)
             # 3. Configureer de specs en Cloud-Init
+            # Zorgt ervoor dat ip en gw strings zijn zonder haakjes of anders werkt het niet 
+            ip_string = ip[0] if isinstance(ip, list) else ip
+            gw_string = gw[0] if isinstance(gw, list) else gw
+
+            # Haal voor de zekerheid eventuele spaties weg
+            ip_clean = str(ip_string).strip()
+            gw_clean = str(gw_string).strip()
             # We voegen hier een default user en SSH sleutel toe
+        
+            print(f"DEBUG: ipconfig0='ip={ip_clean}/24,gw={gw_clean}'")
             proxmox.nodes(PROXMOX_NODE).qemu(new_vmid).config.set(
                 memory=ram_mb,
                 cores=cores,
                 # Cloud-init specifieke velden:
                 ciuser="admin", 
-                cipassword="Welkom01!", # Optioneel: zet een wachtwoord
-                ipconfig0="ip=dhcp",    # Automatisch IP via DHCP
+                cipassword="12345678", # Optioneel: zet een wachtwoord
+                ipconfig0=f"ip={ip_clean}/24,gw={gw_clean}",    # Automatisch IP via yaml
+                nameserver="1.1.1.1 8.8.8.8"
                 # sshkeys="ssh-rsa AAAA...", # Plak hier je publieke SSH key
             )
 
