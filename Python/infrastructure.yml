@@ -1,0 +1,36 @@
+infrastructure:
+  name: "Test"
+  version: "1.2.0"
+  
+  nodes:
+    # - name: "Hoofdserver"
+    #   specs:
+    #     cpu: "1 cores"
+    #     ram: "2GB"
+    #     storage: "5GB"
+    #     os: "Ubuntu 22.04"
+    #   network:
+    #     ip_address: "192.168.1.198"
+    #     gateway: "192.168.1.1"
+
+    - name: "vm2"
+      vm_id: 201
+      specs:
+        cpu: "1"
+        ram: "2GB"
+        storage: "5GB"
+        os: "Debian 12"
+      network:
+        ip_address: "192.168.1.199"
+        gateway: "192.168.1.1"
+
+    - name: "vm3"
+      vm_id: 202
+      specs:
+        cpu: "1"
+        ram: "2GB"
+        storage: "5GB"
+        os: "Debian 12"
+      network:
+        ip_address: "192.168.1.200"
+        gateway: "192.168.1.1"

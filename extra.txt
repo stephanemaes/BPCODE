@@ -1,0 +1,21 @@
+resource "proxmox_virtual_environment_vm" "vms" {
+  # Loop door elke node uit het YAML-bestand heen
+  for_each = { for node in local.yaml_data.nodes : node.name => node }
+
+  name      = each.value.name
+  node_name = "pve"
+
+  clone {
+    # Dynamisch template kiezen op basis van OS in YAML
+    vm_id = each.value.os == "ubuntu" ? 9000 : 9001
+  }
+
+  initialization {
+    ip_config {
+      ipv4 {
+        address = "${each.value.ip}/24"
+        gateway = "192.168.1.1"
+      }
+    }
+  }
+}

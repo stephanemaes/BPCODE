@@ -1,0 +1,24 @@
+nodes:
+    - name: "vm1Terra"
+      specs:
+        cpu: "1"
+        ram: "2GB"
+        disks:
+        - size: "5G"             
+          storage: "local-lvm"
+        os: "Debian 12"
+      network:
+        ip_address: "192.168.1.199"
+        gateway: "192.168.1.1"
+
+    - name: "vm2Terra"
+      specs:
+        cpu: "1"
+        ram: "2GB"
+        disks:
+        - size: "5G"
+          storage: "local-lvm"
+        os: "Debian 12"
+      network:
+        ip_address: "192.168.1.200"
+        gateway: "192.168.1.1"
