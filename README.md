@@ -1,2 +1,2 @@
-#Code voor de bachelorproef van Stéphane Maes 
-#uitleg is in de bachelorproef zelf.
+# Code voor de bachelorproef van Stéphane Maes. 
+# Uitleg is in de bachelorproef zelf.
