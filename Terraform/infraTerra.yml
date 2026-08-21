@@ -1,24 +1,28 @@
 nodes:
-    - name: "vm1Terra"
-      specs:
-        cpu: "1"
-        ram: "2GB"
-        disks:
-        - size: "5G"             
+  - name: "vm1Terra"
+    vm_id: 201         # Uniek VM ID in Proxmox
+    specs:
+      cpu: 1
+      ram: 2048        # In Megabytes (2048 MB = 2GB)
+      disks:
+        - size: 5      # In Gigabytes
           storage: "local-lvm"
-        os: "Debian 12"
-      network:
-        ip_address: "192.168.1.199"
-        gateway: "192.168.1.1"
+      os: "Debian 12"
+    network:
+      bridge: "vmbr0"
+      ip_address: "192.168.1.199"
+      gateway: "192.168.1.1"
 
-    - name: "vm2Terra"
-      specs:
-        cpu: "1"
-        ram: "2GB"
-        disks:
-        - size: "5G"
+  - name: "vm2Terra"
+    vm_id: 202         # Uniek VM ID in Proxmox
+    specs:
+      cpu: 1
+      ram: 2048        # In Megabytes
+      disks:
+        - size: 5      # In Gigabytes
           storage: "local-lvm"
-        os: "Debian 12"
-      network:
-        ip_address: "192.168.1.200"
-        gateway: "192.168.1.1"
+      os: "Debian 12"
+    network:
+      bridge: "vmbr0"
+      ip_address: "192.168.1.200"
+      gateway: "192.168.1.1"
